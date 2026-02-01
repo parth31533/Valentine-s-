@@ -1,4 +1,223 @@
-photo1.jpg
-photo2.jpg
-photo3.jpg
-music.mp3
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy Valentine's Day Dhwani ❤️</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #ff758c, #ff7eb3);
+      color: white;
+      text-align: center;
+      overflow-x: hidden;
+    }
+
+    section {
+      padding: 40px 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 25px;
+      border-radius: 15px;
+      margin: 20px 0;
+      backdrop-filter: blur(10px);
+    }
+
+    img {
+      width: 250px;
+      max-width: 90%;
+      height: auto;
+      border-radius: 15px;
+      margin: 10px;
+    }
+
+    button {
+      background: white;
+      color: #ff4e73;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 30px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #ffe6ec;
+    }
+
+    #surpriseMessage {
+      display: none;
+      margin-top: 20px;
+      font-size: 18px;
+      animation: fadeIn 2s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+
+    .heart {
+      position: fixed;
+      color: pink;
+      animation: float 6s linear infinite;
+      font-size: 20px;
+    }
+
+    @keyframes float {
+      from {
+        transform: translateY(100vh);
+        opacity: 1;
+      }
+      to {
+        transform: translateY(-10vh);
+        opacity: 0;
+      }
+    }
+
+    /* CINEMATIC INTRO */
+
+    #introScreen {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #ff758c, #ff7eb3);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    #introScreen h1 {
+      font-size: 28px;
+      max-width: 80%;
+    }
+
+    #mainContent {
+      display: none;
+    }
+
+  </style>
+</head>
+
+<body>
+
+<!-- INTRO SCREEN -->
+<div id="introScreen">
+    <h1>Dhwani, put on your headphones before continuing… 🎧❤️</h1>
+    <br>
+    <button onclick="enterSite()">Enter</button>
+</div>
+
+
+<!-- MAIN WEBSITE -->
+<div id="mainContent">
+
+  <section>
+    <h1>Happy Valentine's Day, Dhwani ❤️</h1>
+    <h2 id="typewriter"></h2>
+  </section>
+
+  <section class="card">
+    <h2>💌 A Letter For You</h2>
+    <p>
+      My love,<br><br>
+      Your presence, your voice, watching you sleep, is the most precious blessing
+      that I never knew I needed, and that it would bring this feeling of
+      being a shield against anything that could harm my baby's peace.
+      I am very protective of you, your happiness and your peace. Dhwani,
+      I promise to be by your side, support you where you need me, 
+      and together we'll be great.<br><br>
+
+      Even though distance keeps us apart right now, my heart has never
+      felt closer to yours. Every memory with you is my favorite,    
+      and every day without you is one day closer to holding you tightly in my arms forever.<br><br>
+      
+      Happy Valentine's Day, Baby ❤️
+    </p> 
+  </section>
+                         
+  <section class="card">
+    <h2>📸 Our Memories</h2>
+    <img src="IMG_9322.png">
+    <img src="IMG_9348.PNG">
+    <img src="unnamed.jpg">
+    <img src="IMG_8876.PNG">
+    <img src="IMG_9107.PNG">
+  </section>
+
+  <section class="card">
+    <h2>💖 Tap for a Surprise</h2>
+    <button onclick="showSurprise()">Dhwani, open this ❤️</button>
+
+    <p id="surpriseMessage">
+      Distance only makes me more certain —
+      you are the one I want to laugh with,
+      travel with, grow with,
+      and love forever. 💞
+    </p>
+  </section>
+
+  <section>
+    <h2>🎵 Our Song</h2>
+    <audio id="music" src="music.mp3"></audio>
+  </section>
+
+</div>
+
+<script>
+
+function enterSite() {
+
+  document.getElementById("introScreen").style.display = "none";
+  document.getElementById("mainContent").style.display = "block";
+
+  document.getElementById("music").play();
+
+  typeWriter();
+}
+
+function showSurprise() {
+  document.getElementById("surpriseMessage").style.display = "block";
+}
+
+// TYPEWRITER
+const text = "You are my favorite story, the one I will never make it end. You're my certainty, the prayer my heart made before I even knew it was wishing for you ❤️";
+let i = 0;
+
+function typeWriter() {
+  if (i < text.length) {
+    document.getElementById("typewriter").innerHTML += text.charAt(i);
+    i++;
+    setTimeout(typeWriter, 45);
+  }
+}
+
+// FLOATING HEARTS
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerText = "❤️";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.animationDuration = Math.random() * 3 + 3 + "s";
+  document.body.appendChild(heart);
+
+  setTimeout(() => {
+    heart.remove();
+  }, 6000);
+}
+
+setInterval(createHeart, 300);
+
+</script>
+
+</body>
+</html>
