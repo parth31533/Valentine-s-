@@ -10,7 +10,6 @@
 
 <style>
 :root {
-    /* Use dvh for mobile browsers to account for UI bars */
     --vh: 100vh;
     --vh: 100dvh;
 }
@@ -27,7 +26,7 @@ body {
     linear-gradient(135deg,#ff4e73,#ff7eb3);
     color: #b31257;
     font-family: 'Playfair Display', serif;
-    position: fixed; /* Prevents bounce scroll on iOS */
+    position: fixed;
 }
 
 #flash {
@@ -63,9 +62,9 @@ body {
 }
 
 .content-wrapper {
-    max-height: 85vh;
-    width: 90%;
-    max-width: 800px;
+    max-height: 95vh;
+    width: 95%;
+    max-width: 700px;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
@@ -77,12 +76,12 @@ body {
 
 .content-wrapper::-webkit-scrollbar { display: none; }
 
-#finalSection { background: black; color: #ff9ac6; }
+#finalSection { background: black !important; color: #ff9ac6; }
 
 h1 {
     font-family: 'Dancing Script', cursive;
-    font-size: clamp(26px, 7vw, 52px);
-    margin-bottom: 20px;
+    font-size: clamp(24px, 6vw, 48px);
+    margin-bottom: 15px;
     text-align: center;
     text-shadow: 0 4px 18px rgba(0,0,0,.18);
 }
@@ -91,51 +90,47 @@ h2, .letter, .caption {
     font-family: 'Playfair Display', serif;
     font-style: italic;
     font-weight: 700;
-    line-height: 1.6;
+    line-height: 1.5;
     text-align: center;
-    font-size: clamp(16px, 4.2vw, 22px);
-    text-shadow: 0 3px 12px rgba(0,0,0,.12);
+    font-size: clamp(16px, 4vw, 20px);
+    margin-top: 10px;
 }
 
-.animate-btn {
-    display: none;
-    opacity: 0;
-}
+.animate-btn { display: none; opacity: 0; }
 
 button {
-    padding: 12px 45px;
+    padding: 12px 40px;
     border-radius: 999px;
     border: none;
     background: #b31257;
     color: #ffffff;
     font-family: 'Dancing Script', cursive;
-    font-size: 24px;
+    font-size: 22px;
     font-weight: 700;
     cursor: pointer;
-    margin: 25px 0;
+    margin: 20px 0;
     box-shadow: 0 10px 25px rgba(179, 18, 87, 0.4);
     transition: all 0.3s ease;
     flex-shrink: 0;
-    -webkit-tap-highlight-color: transparent;
 }
 
-button:hover { transform: scale(1.05); background: #d41669; }
-
 img {
+    width: auto;
+    height: auto;
     max-width: 100%;
     max-height: 50vh;
     object-fit: contain;
-    border-radius: 20px;
-    box-shadow: 0 20px 60px rgba(0,0,0,.3);
-    margin-bottom: 15px;
+    border-radius: 15px;
 }
 
-/* Specific Landscape Styling */
+/* Updated Landscape Styling - Bigger and more readable */
 .landscape-img {
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    object-fit: cover;
-    max-height: 40vh;
+    width: 100% !important;
+    height: auto !important;
+    max-height: 60vh !important; /* Increased height so content is readable */
+    object-fit: contain !important;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
 }
 
 .heart-fall {
@@ -163,7 +158,7 @@ img {
     z-index: 99999;
     animation: cinematicReveal 3s ease forwards;
 }
-@keyframes cinematicReveal { 0%{ filter:blur(40px); transform:scale(1.4); } 100%{ filter:blur(0); transform:scale(1); opacity:0; visibility:hidden; } }
+@keyframes cinematicReveal { 0%{ filter:blur(40px); } 100%{ filter:blur(0); opacity:0; visibility:hidden; } }
 
 </style>
 </head>
@@ -199,15 +194,13 @@ img {
         <div class="letter animate">
             My love,<br><br>
             Your presence, your voice, watching you sleep, is the most precious blessing
-            that I never knew I needed and that it would bring this deep feeling of
-            being a shield against anything that could ever harm my baby's peace.<br><br>
+            that I never knew I needed.<br><br>
             I am deeply protective of you, your happiness, and your peace.<br><br>
             Dhwani, I promise to stand beside you, support you wherever you need me,
             and together, we'll be something truly beautiful.<br><br>
-            Even though distance keeps us apart right now, my heart has never felt closer to yours.
-            Every memory with you is my favorite,
-            and every day without you is simply one day closer
-            to holding you tightly in my arms forever.<br><br>
+            Distance keeps us apart right now, but my heart has never felt closer. 
+            Every day without you is simply one day closer
+            to holding you tightly forever.<br><br>
             God bless our love ❤️
         </div>
         <button class="animate-btn" onclick="next()">Continue</button>
@@ -259,7 +252,7 @@ img {
         <h1 id="openTitle">Dhwani, open this ❤️</h1>
         <h2 id="surpriseText" class="animate" style="display:none;">
             Distance only makes me more certain that you are the one I want to laugh with, travel with, grow with,
-            be crazy with, and build a beautiful life with, can't wait to start our life with us and ours ;).
+            be crazy with, and build a beautiful life with.
         </h2>
         <button id="surpriseBtn" onclick="reveal()">We will make this happen</button>
         <button id="lilSurpriseBtn" class="animate-btn" onclick="next()">Also, a lil surprize</button>
@@ -268,7 +261,7 @@ img {
 
 <div class="section" id="finalSection">
     <div class="content-wrapper">
-        <h1>See you soon in 6 days ;) ❤️</h1>
+        <h1>See you in 6 days ;) ❤️</h1>
         <img src="Flight.png" class="landscape-img">
         <h2 class="animate" id="finalMessage">I cannot wait to hold you.<br><br>Yours, Parth.</h2>
     </div>
@@ -285,21 +278,13 @@ window.addEventListener("load",()=>{
 function flash(){
     const f=document.getElementById("flash");
     f.classList.remove("flash-active");
-    void f.offsetWidth; // Trigger reflow
+    void f.offsetWidth; 
     f.classList.add("flash-active");
 }
 
 function start(){
     const music = document.getElementById("music");
-    music.muted = false; // Ensure it's unmuted on interaction
-    music.play().then(() => {
-        music.volume = 0;
-        let vol = 0;
-        const fade = setInterval(() => {
-            if(vol < 0.95) { vol += 0.05; music.volume = vol; }
-            else { clearInterval(fade); }
-        }, 150);
-    }).catch(e => console.log("Audio play blocked", e));
+    music.play().catch(e => console.log("Manual play required"));
     flash();
     next();
 }
@@ -327,10 +312,7 @@ function typeWriter(el, callback){
     function type(){
         if(html.substring(i,i+4)==="<br>"){ el.innerHTML+="<br>"; i+=4; }
         else{ el.innerHTML+=html.charAt(i); i++; }
-        
-        if(i<html.length){ 
-            setTimeout(type, 50); // Slightly faster for smoother reading
-        } 
+        if(i<html.length){ setTimeout(type, 40); } 
         else { 
             if(callback) callback();
             if(el.id === "finalMessage") createBigHeart(); 
@@ -342,38 +324,33 @@ function typeWriter(el, callback){
 function animateSection(section){
     const textElements = section.querySelectorAll(".animate");
     const btn = section.querySelector(".animate-btn");
-    
     let completed = 0;
+
     if(textElements.length === 0 && btn) {
-        btn.style.display = "block";
-        btn.animate([{opacity: 0}, {opacity: 1}], {duration: 800, fill: 'forwards'});
+        showBtn(btn);
         return;
     }
 
     textElements.forEach(el => {
         typeWriter(el, () => {
             completed++;
-            if(completed === textElements.length && btn) {
-                btn.style.display = "block";
-                btn.animate([{opacity: 0}, {opacity: 1}], {duration: 800, fill: 'forwards'});
-            }
+            if(completed === textElements.length && btn) showBtn(btn);
         });
     });
+}
+
+function showBtn(btn) {
+    btn.style.display = "block";
+    btn.animate([{opacity: 0}, {opacity: 1}], {duration: 800, fill: 'forwards'});
 }
 
 function reveal(){
     document.getElementById("openTitle").style.display="none";
     document.getElementById("surpriseBtn").style.display="none";
-    
     const st = document.getElementById("surpriseText");
     const lilBtn = document.getElementById("lilSurpriseBtn");
-    
     st.style.display="block";
-    
-    typeWriter(st, () => {
-        lilBtn.style.display = "block";
-        lilBtn.animate([{opacity: 0}, {opacity: 1}], {duration: 800, fill: 'forwards'});
-    });
+    typeWriter(st, () => showBtn(lilBtn));
 }
 
 function createBigHeart() {
@@ -385,18 +362,16 @@ function createBigHeart() {
     heart.style.animation = "floatUp 4s ease-out forwards";
 }
 
-const heartTypes = ["❤️", "💖", "💗", "💓", "💕"];
 setInterval(()=>{
     const heart = document.createElement("div");
     heart.className = "heart-fall";
-    heart.innerHTML = heartTypes[Math.floor(Math.random() * heartTypes.length)];
+    heart.innerHTML = "❤️";
     heart.style.left = Math.random() * 100 + "vw";
     heart.style.fontSize = (Math.random() * 10 + 20) + "px";
     heart.style.animationDuration = (Math.random() * 2 + 3) + "s";
-    heart.style.opacity = Math.random() * 0.4 + 0.6;
     document.body.appendChild(heart);
     setTimeout(() => heart.remove(), 5000);
-}, 250); // Slightly slower rate for better performance
+}, 300);
 </script>
 
 </body>
