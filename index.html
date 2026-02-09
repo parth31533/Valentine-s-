@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 
 <title>For Dhwani ❤️</title>
 
@@ -10,6 +10,8 @@
 
 <style>
 :root {
+    /* Use dvh for mobile browsers to account for UI bars */
+    --vh: 100vh;
     --vh: 100dvh;
 }
 
@@ -25,11 +27,12 @@ body {
     linear-gradient(135deg,#ff4e73,#ff7eb3);
     color: #b31257;
     font-family: 'Playfair Display', serif;
-    position: fixed;
+    position: fixed; /* Prevents bounce scroll on iOS */
 }
 
 #flash {
     position: fixed;
+    top: 0; left: 0;
     width: 100%;
     height: 100%;
     background: #ff6a95;
@@ -60,7 +63,7 @@ body {
 }
 
 .content-wrapper {
-    max-height: 90vh;
+    max-height: 85vh;
     width: 90%;
     max-width: 800px;
     overflow-y: auto;
@@ -74,12 +77,13 @@ body {
 
 .content-wrapper::-webkit-scrollbar { display: none; }
 
-.section:last-child { background: black; color: #ff9ac6; }
+#finalSection { background: black; color: #ff9ac6; }
 
 h1 {
     font-family: 'Dancing Script', cursive;
-    font-size: clamp(28px, 7vw, 52px);
+    font-size: clamp(26px, 7vw, 52px);
     margin-bottom: 20px;
+    text-align: center;
     text-shadow: 0 4px 18px rgba(0,0,0,.18);
 }
 
@@ -88,11 +92,11 @@ h2, .letter, .caption {
     font-style: italic;
     font-weight: 700;
     line-height: 1.6;
-    font-size: clamp(16px, 4.2vw, 24px);
+    text-align: center;
+    font-size: clamp(16px, 4.2vw, 22px);
     text-shadow: 0 3px 12px rgba(0,0,0,.12);
 }
 
-/* Hide navigation buttons initially */
 .animate-btn {
     display: none;
     opacity: 0;
@@ -108,7 +112,7 @@ button {
     font-size: 24px;
     font-weight: 700;
     cursor: pointer;
-    margin: 30px 0;
+    margin: 25px 0;
     box-shadow: 0 10px 25px rgba(179, 18, 87, 0.4);
     transition: all 0.3s ease;
     flex-shrink: 0;
@@ -119,11 +123,19 @@ button:hover { transform: scale(1.05); background: #d41669; }
 
 img {
     max-width: 100%;
-    max-height: 55vh;
+    max-height: 50vh;
     object-fit: contain;
     border-radius: 20px;
     box-shadow: 0 20px 60px rgba(0,0,0,.3);
     margin-bottom: 15px;
+}
+
+/* Specific Landscape Styling */
+.landscape-img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    max-height: 40vh;
 }
 
 .heart-fall {
@@ -137,10 +149,15 @@ img {
 @keyframes fallDown { to { transform: translateY(110vh); opacity: 0; } }
 
 .big-heart { position: absolute; font-size: 80px; opacity: 0; z-index: 100; }
-@keyframes floatUp { 0% { transform: translateY(100px) scale(0.5); opacity: 0; } 50% { opacity: 0.8; } 100% { transform: translateY(-250px) scale(1.5); opacity: 0; } }
+@keyframes floatUp { 
+    0% { transform: translateY(100px) scale(0.5); opacity: 0; } 
+    50% { opacity: 0.8; } 
+    100% { transform: translateY(-250px) scale(1.5); opacity: 0; } 
+}
 
 #cinematicOverlay {
     position: fixed;
+    top: 0; left: 0;
     width: 100%; height: 100%;
     background: #ff7eb3;
     z-index: 99999;
@@ -156,7 +173,7 @@ img {
 <div id="flash"></div>
 
 <audio id="music" loop playsinline preload="auto">
-<source src="music.mp3" type="audio/mpeg">
+    <source src="music.mp3" type="audio/mpeg">
 </audio>
 
 <div class="section active">
@@ -223,7 +240,7 @@ img {
 
 <div class="section">
     <div class="content-wrapper">
-        <img src="IMG_9348.PNG">
+        <img src="IMG_9348.PNG" class="landscape-img">
         <div class="caption animate">Even with our distance, making you fall asleep is the best part of my day ❤️</div>
         <button class="animate-btn" onclick="next()">Next</button>
     </div>
@@ -252,7 +269,7 @@ img {
 <div class="section" id="finalSection">
     <div class="content-wrapper">
         <h1>See you soon in 6 days ;) ❤️</h1>
-        <img src="Flight.png">
+        <img src="Flight.png" class="landscape-img">
         <h2 class="animate" id="finalMessage">I cannot wait to hold you.<br><br>Yours, Parth.</h2>
     </div>
 </div>
@@ -268,17 +285,18 @@ window.addEventListener("load",()=>{
 function flash(){
     const f=document.getElementById("flash");
     f.classList.remove("flash-active");
-    void f.offsetWidth;
+    void f.offsetWidth; // Trigger reflow
     f.classList.add("flash-active");
 }
 
 function start(){
     const music = document.getElementById("music");
+    music.muted = false; // Ensure it's unmuted on interaction
     music.play().then(() => {
         music.volume = 0;
         let vol = 0;
         const fade = setInterval(() => {
-            if(vol < 1) { vol += 0.05; music.volume = vol; }
+            if(vol < 0.95) { vol += 0.05; music.volume = vol; }
             else { clearInterval(fade); }
         }, 150);
     }).catch(e => console.log("Audio play blocked", e));
@@ -311,10 +329,9 @@ function typeWriter(el, callback){
         else{ el.innerHTML+=html.charAt(i); i++; }
         
         if(i<html.length){ 
-            setTimeout(type,75); 
+            setTimeout(type, 50); // Slightly faster for smoother reading
         } 
         else { 
-            // TEXT FINISHED
             if(callback) callback();
             if(el.id === "finalMessage") createBigHeart(); 
         }
@@ -326,9 +343,17 @@ function animateSection(section){
     const textElements = section.querySelectorAll(".animate");
     const btn = section.querySelector(".animate-btn");
     
+    let completed = 0;
+    if(textElements.length === 0 && btn) {
+        btn.style.display = "block";
+        btn.animate([{opacity: 0}, {opacity: 1}], {duration: 800, fill: 'forwards'});
+        return;
+    }
+
     textElements.forEach(el => {
         typeWriter(el, () => {
-            if(btn) {
+            completed++;
+            if(completed === textElements.length && btn) {
                 btn.style.display = "block";
                 btn.animate([{opacity: 0}, {opacity: 1}], {duration: 800, fill: 'forwards'});
             }
@@ -345,7 +370,6 @@ function reveal(){
     
     st.style.display="block";
     
-    // Type out the surprise text, then show the "lil surprize" button
     typeWriter(st, () => {
         lilBtn.style.display = "block";
         lilBtn.animate([{opacity: 0}, {opacity: 1}], {duration: 800, fill: 'forwards'});
@@ -372,10 +396,8 @@ setInterval(()=>{
     heart.style.opacity = Math.random() * 0.4 + 0.6;
     document.body.appendChild(heart);
     setTimeout(() => heart.remove(), 5000);
-}, 100); 
+}, 250); // Slightly slower rate for better performance
 </script>
 
 </body>
 </html>
-
-
