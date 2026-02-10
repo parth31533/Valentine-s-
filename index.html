@@ -34,14 +34,14 @@ body {
     top: 0; left: 0;
     width: 100%;
     height: 100%;
-    background: #ff6a95;
+    background: #ffffff; /* Changed to white for a more dramatic 'suspense' flash */
     opacity: 0;
     pointer-events: none;
     z-index: 99998;
 }
 
-.flash-active { animation: flashAnim .55s ease; }
-@keyframes flashAnim { 0% { opacity: 0; } 40% { opacity: .85; } 100% { opacity: 0; } }
+.flash-active { animation: flashAnim .8s ease; }
+@keyframes flashAnim { 0% { opacity: 0; } 50% { opacity: 1; } 100% { opacity: 0; } }
 
 .section {
     position: absolute;
@@ -194,7 +194,7 @@ img {
 
 <div class="section">
     <div class="content-wrapper">
-        <h1>Happy Valentines day to us Baby❤️</h1>
+        <h1>Happy Valentines day to us, Baby❤️</h1>
         <h2 class="animate">
             You are my favorite story, the one with no end, no final word, written in our God's grace. You're my certainty, the prayer my heart made long before I even knew it was wishing for you ❤️
         </h2>
@@ -256,7 +256,7 @@ img {
 <div class="section">
     <div class="content-wrapper">
         <img src="unnamed.jpg">
-        <div class="caption animate">My Princess, Ily ❤️</div>
+        <div class="caption animate">My Princess, I love you ❤️</div>
         <button class="animate-btn" onclick="next()">Next</button>
     </div>
 </div>
@@ -275,9 +275,9 @@ img {
 
 <div class="section" id="finalSection" style="background: black !important; color: #ff9ac6;">
     <div class="content-wrapper">
-        <h1>See you on March 20th ;) </h1>
+        <h1>See you on March 20th ;) ❤️</h1>
         <img src="Flight2.png" class="landscape-img">
-        <button class="animate-btn" onclick="next()" style="display:block; opacity:1;">Wait one more thing</button>
+        <button id="suspenseBtn" class="animate-btn" onclick="next()">ahhhhhhhh wait one more thing</button>
     </div>
 </div>
 
@@ -335,6 +335,21 @@ function goToSection(index) {
     current = index;
     sections[current].classList.add("active");
     animateSection(sections[current]);
+
+    // TRIGGER SUSPENSE TIMER on the March 20th section
+    if(sections[current].id === "finalSection") {
+        startSuspenseTimer();
+    }
+}
+
+function startSuspenseTimer() {
+    const btn = document.getElementById("suspenseBtn");
+    btn.style.display = "none"; // Ensure it's hidden
+    
+    setTimeout(() => {
+        flash(); // Flash of light
+        showBtn(btn); // Show button
+    }, 15000); // 15 seconds
 }
 
 function typeWriter(el, callback){
@@ -370,8 +385,8 @@ function animateSection(section){
 
     let completed = 0;
     if(textElements.length === 0 && btn) {
-        // Special case: don't auto-show the lilSurpriseBtn here
-        if(btn.id !== "lilSurpriseBtn") showBtn(btn);
+        // Skip auto-showing the suspense button (handled by timer)
+        if(btn.id !== "lilSurpriseBtn" && btn.id !== "suspenseBtn") showBtn(btn);
         return;
     }
 
@@ -379,7 +394,7 @@ function animateSection(section){
         typeWriter(el, () => {
             completed++;
             if(completed === textElements.length && btn) {
-                if(btn.id !== "lilSurpriseBtn") showBtn(btn);
+                if(btn.id !== "lilSurpriseBtn" && btn.id !== "suspenseBtn") showBtn(btn);
             }
         });
     });
@@ -391,18 +406,12 @@ function showBtn(btn) {
 }
 
 function reveal(){
-    // 1. Hide the initial title and the first button
     document.getElementById("openTitle").style.display="none";
     document.getElementById("surpriseBtn").style.display="none";
-    
     const st = document.getElementById("surpriseText");
     const lilBtn = document.getElementById("lilSurpriseBtn");
-    
-    // 2. Show the surprise text and start typing
     st.style.display="block";
-    
     typeWriter(st, () => {
-        // 3. ONLY after typing is done, show the second button
         showBtn(lilBtn);
     });
 }
@@ -413,7 +422,6 @@ function releaseBigHeart() {
     heart.innerHTML = "💖";
     const target = document.getElementById("trulyFinalSection");
     target.appendChild(heart);
-    
     heart.style.animation = "floatUpRelease 4s ease-out forwards";
     setTimeout(() => heart.remove(), 4000);
 }
