@@ -34,7 +34,7 @@ body {
     top: 0; left: 0;
     width: 100%;
     height: 100%;
-    background: #ffffff; /* Changed to white for a more dramatic 'suspense' flash */
+    background: #ffffff;
     opacity: 0;
     pointer-events: none;
     z-index: 99998;
@@ -231,7 +231,7 @@ img {
 
 <div class="section">
     <div class="content-wrapper">
-        <img src="IMG_8876.PNG">
+        <img src="IMG_8876.PNG" class="landscape-img">
         <div class="caption animate">My eyes feel like home when they catch yours.</div>
         <button class="animate-btn" onclick="next()">Next</button>
     </div>
@@ -336,7 +336,6 @@ function goToSection(index) {
     sections[current].classList.add("active");
     animateSection(sections[current]);
 
-    // TRIGGER SUSPENSE TIMER on the March 20th section
     if(sections[current].id === "finalSection") {
         startSuspenseTimer();
     }
@@ -344,12 +343,12 @@ function goToSection(index) {
 
 function startSuspenseTimer() {
     const btn = document.getElementById("suspenseBtn");
-    btn.style.display = "none"; // Ensure it's hidden
+    btn.style.display = "none";
     
     setTimeout(() => {
-        flash(); // Flash of light
-        showBtn(btn); // Show button
-    }, 15000); // 15 seconds
+        flash(); 
+        showBtn(btn); 
+    }, 15000); 
 }
 
 function typeWriter(el, callback){
@@ -385,7 +384,6 @@ function animateSection(section){
 
     let completed = 0;
     if(textElements.length === 0 && btn) {
-        // Skip auto-showing the suspense button (handled by timer)
         if(btn.id !== "lilSurpriseBtn" && btn.id !== "suspenseBtn") showBtn(btn);
         return;
     }
